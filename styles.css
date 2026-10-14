@@ -137,3 +137,7 @@ html[data-theme="dark"] .working-principles p:not(.eyebrow),html[data-theme="dar
 html[data-theme="dark"] .contact-section{background:#284b3d;color:#f0f6ec}
 html[data-theme="dark"] .contact-top>.eyebrow,html[data-theme="dark"] .contact-top>span,html[data-theme="dark"] .contact-bottom p,html[data-theme="dark"] .contact-bottom p.availability,html[data-theme="dark"] .copy-email{color:#d4e6d0}
 html[data-theme="dark"] .site-footer p,html[data-theme="dark"] .site-footer>a:last-child{color:#abbcac}
+
+/* Project names use open, readable letterforms rather than the condensed display serif. */
+.project .project-heading h3 { font-family:var(--sans); font-size:clamp(28px,3vw,38px); font-weight:600; line-height:1.25; letter-spacing:normal; margin:18px 0 16px; }
+.tech-logo img[src*="google-adk"] { width:42px; height:32px; }
