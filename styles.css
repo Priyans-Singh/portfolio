@@ -177,3 +177,52 @@ html[data-theme="dark"] .runtime-node>small,html[data-theme="dark"] .runtime-cap
 .bi-orchestrator{background:#263e85;color:#edf2ff}
 .bi-orchestrator span{color:#d3def8}
 .bi-query,.bi-branches>div{background:#f6f8ff;border-color:#bac9e8}
+
+/* Stable overview; the disclosure adds only information not already above it. */
+.project-copy:has(details[open]) .project-description-preview{display:block}
+.project-description-preview{max-height:none;overflow:visible}
+.project-description-preview::after{display:none}
+.project .project-more .project-detail{columns:1}
+.project .project-copy .project-more{margin-top:18px}
+/* Explanations support hover, keyboard focus and a tap on touch screens. */
+.project-heading .tags li{padding:0}
+.tag-info{display:block;border:0;background:transparent;color:inherit;font:inherit;padding:7px 10px;cursor:help;border-radius:3px;text-align:left}
+.tag-info:hover,.tag-info[aria-expanded="true"]{background:#dce6ff;color:#263f8c}
+.tag-info:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.tag-tooltip{position:fixed;z-index:100;max-width:310px;padding:13px 16px;background:#17223b;color:#f1f5ff;border:1px solid #45618e;border-radius:9px;box-shadow:0 10px 30px #0b132638;font:400 14px/1.55 var(--sans)}
+.tag-tooltip[hidden]{display:none}
+/* The original header stays unchanged at the top; a compact glass bar enters later. */
+.header-space{display:none}
+.site-header.is-floating{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:60;height:76px;padding:0 24px;border:1px solid #c9d5ed99;border-radius:12px;background:#f4f6fae6;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 8px 30px #17223b16;animation:header-enter .28s ease both}
+@keyframes header-enter{from{opacity:0;transform:translate(-50%,-12px)}to{opacity:1;transform:translate(-50%,0)}}
+@media(max-width:760px){.site-header.is-floating{top:8px;height:64px;width:calc(100% - 24px);padding:0 12px}.site-header.is-floating .brand{font-size:12px}.site-header.is-floating .brand small{font-size:10px}}
+@media(prefers-reduced-motion:reduce){.site-header.is-floating{animation:none}}
+/* Dark mode: near-black canvas, distinct neutral surfaces, restrained vivid blue. */
+html[data-theme="dark"]{--paper:#0b101b;--ink:#edf2fc;--muted:#b3bfd2;--line:#2a3549;--green:#8baaff;--mint:#192641;--surface:#111a29;--surface-soft:#172338;--accent:#8baaff}
+html[data-theme="dark"] .project{background:#111a29;border-color:#2c3a51}
+html[data-theme="dark"] .project-heading{background:#172338}
+html[data-theme="dark"] .project-heading .tags li{background:#101b2e;border-color:#354968;color:#d9e4f8}
+html[data-theme="dark"] .tag-info:hover,html[data-theme="dark"] .tag-info[aria-expanded="true"]{background:#253f72;color:#f1f5ff}
+html[data-theme="dark"] .tag-tooltip{background:#1b2c49;border-color:#5274ad;color:#eef4ff}
+html[data-theme="dark"] .site-header.is-floating{background:#0e1729df;border-color:#3c507688;box-shadow:0 10px 35px #00000050}
+html[data-theme="dark"] .project-description-preview{--project-surface:#111a29}
+html[data-theme="dark"] .hero-intro,html[data-theme="dark"] .project-heading>p:not(.project-meta),html[data-theme="dark"] .project-preview-list{color:#c3cede}
+html[data-theme="dark"] .project-copy p.project-preview{color:#edf2fc}
+html[data-theme="dark"] .system-art{background-color:#111d31;border-color:#33496a;background-image:radial-gradient(#6c8cbd40 .7px,transparent .7px)}
+html[data-theme="dark"] .diagram-input,html[data-theme="dark"] .integration-row>div{background:#152238;border-color:#3c5477}
+html[data-theme="dark"] .runtime-node,html[data-theme="dark"] .copilot-core,html[data-theme="dark"] .bi-orchestrator{background:#254b9b;border-color:#507bd2;color:#f2f6ff}
+html[data-theme="dark"] .diagram-output{background:#1b345a;border-color:#426597;color:#e8f0ff}
+html[data-theme="dark"] .copilot-art,html[data-theme="dark"] .bi-art{background:#192942;color:#cbdcf6}
+html[data-theme="dark"] .transcript-line,html[data-theme="dark"] .bi-query,html[data-theme="dark"] .bi-branches>div{background:#111e33;border-color:#415d85;color:#e4edff}
+html[data-theme="dark"] .notes-art{background:#1c293c}
+html[data-theme="dark"] .approach-section{background:#101b2d;border-color:#2b3a53}
+html[data-theme="dark"] .service{background:#172338;border-color:#31496b}
+html[data-theme="dark"] .contact-section{background:#142b53}
+html[data-theme="dark"] .project .project-demo{--demo-surface:#142139;--demo-panel:#192942;--demo-ink:#eef4ff;--demo-muted:#b7c9e6;--demo-line:#39577e;--demo-accent:#8baaff;--demo-soft:#243e67;--demo-paper:#101c30}
+.project .project-copy:has(details[open]) .project-description-preview{display:block}
+.site-header.is-floating{min-height:0}
+html{scroll-padding-top:110px}
+@media(max-width:760px){html{scroll-padding-top:90px}}
+.tag-info{scroll-margin-top:110px}
+.project .project-description-preview{max-height:none;overflow:visible}
+.project .project-description-preview::after{display:none}
