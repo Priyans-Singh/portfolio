@@ -91,7 +91,7 @@ body{font-size:18px}
 .tech-marquee-track-forward{animation:tech-scroll 55s linear infinite}
 .tech-marquee-track-reverse{animation:tech-scroll-reverse 59s linear infinite}
 .tech-logo{transform-origin:center;position:relative;z-index:0}
-.tech-logo:hover{transform:scale(1.035);z-index:1}
+.tech-logo:hover{transform:scale(1.09);z-index:1}
 .tech-logo-wordmark img{width:105px;height:28px}
 .tech-logo-wordmark span{display:none}
 @keyframes tech-scroll-reverse{from{transform:translateX(-50%)}to{transform:translateX(0)}}
@@ -141,3 +141,7 @@ html[data-theme="dark"] .site-footer p,html[data-theme="dark"] .site-footer>a:la
 /* Project names use open, readable letterforms rather than the condensed display serif. */
 .project .project-heading h3 { font-family:var(--sans); font-size:clamp(28px,3vw,38px); font-weight:600; line-height:1.25; letter-spacing:normal; margin:18px 0 16px; }
 .tech-logo img[src*="google-adk"] { width:42px; height:32px; }
+
+/* Give the 9% hover enlargement room on both moving rows. */
+.tech-marquee-group{gap:20px;padding-right:20px}
+.tech-marquee-viewport{padding-block:14px}
