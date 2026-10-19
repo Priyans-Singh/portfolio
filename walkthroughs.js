@@ -8,7 +8,7 @@
   const copy = {
     copilot: {
       title: 'Customer Copilot Rep',
-      before: 'Before · Manual policy search',
+      before: 'Before · Call and manual lookup',
       bridge: 'Integration · Live call context',
       after: 'After · Contextual guidance'
     },
@@ -68,6 +68,18 @@
           startsAt += entry.fullText.length / entry.speed * 1000 + 180;
         });
       });
+      // Summary sections arrive in reading order; later sections occupy no space yet.
+      if (root.dataset.demo === 'notes') {
+        let startsAt = 160;
+        root.querySelectorAll('[data-summary-entry]').forEach(section => {
+          const node = section.querySelector('[data-typewriter]');
+          const entry = this.typed.find(item => item.node === node);
+          entry.start = startsAt;
+          entry.bubble = section;
+          startsAt += entry.fullText.length / entry.speed * 1000 + 160;
+        });
+        this.summaryCompleteAt = phaseStarts.after + startsAt - 160;
+      }
       this.answerCards = [...root.querySelectorAll('[data-appear]')];
       this.tick = this.tick.bind(this);
       this.card.tabIndex = 0;
@@ -237,7 +249,11 @@
       const older = this.root.querySelector('.demo-next-action[data-appear]');
       if (older && newest) older.classList.toggle('is-shifted', !newest.hidden && !older.hidden);
       if (this.root.dataset.demo === 'notes') {
-        this.root.querySelector('.demo-stream-label').textContent = this.elapsed >= 11500 ? 'Complete' : 'Streaming';
+        const complete = this.elapsed >= this.summaryCompleteAt;
+        this.root.querySelector('.demo-summary-state').textContent = complete ? 'Summary ready' : 'Generating summary…';
+        this.root.querySelector('.demo-stream-label').textContent = complete ? 'Complete' : 'Generating';
+        this.root.querySelector('.demo-notes-after .demo-window-badge').textContent = complete ? 'Summary ready' : 'Generating summary';
+        this.root.querySelector('.demo-button-done').textContent = complete ? '✓ Summarized' : 'Summarizing…';
       }
     }
 
