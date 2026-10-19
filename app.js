@@ -32,7 +32,7 @@ copyButton.addEventListener('click', async () => {
 document.querySelectorAll('.project details').forEach(detail => {
   detail.addEventListener('toggle', () => {
     const summary = detail.querySelector('summary');
-    summary.firstChild.textContent = detail.open ? 'Show fewer details' : 'More project details';
+    summary.firstChild.textContent = detail.open ? 'Hide technical details' : 'Read technical details';
     summary.querySelector('span').textContent = detail.open ? '−' : '+';
   });
 });
