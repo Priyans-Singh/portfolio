@@ -104,3 +104,5 @@ a:focus-visible,button:focus-visible,summary:focus-visible,.project:focus-visibl
 /* Recognizable symbols for connected services and an application interface. */
 .integration-row .integration-icon{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px}
 .system-art .integration-icon svg{display:block;width:23px;height:23px;flex:none}
+/* Full wordmarks keep their natural proportions instead of using square icon sizing. */
+.tech-logo.tech-logo-wordmark img{width:auto;height:27px;max-width:150px;object-fit:contain}
