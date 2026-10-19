@@ -1,0 +1,63 @@
+/* Silver & sapphire: the selected palette, applied to every site surface. */
+:root,html[data-theme="light"]{--paper:#edf1f5;--surface:#fafcff;--surface-soft:#dfe6ee;--ink:#1c2d43;--muted:#52657b;--line:#becbd9;--accent:#1f64bd;--green:var(--accent);--node:#204b80;--node-text:#f3f9ff;--panel:#e4eaf0;--panel-ink:#52657b;--node-line:#becbd9;}
+html[data-theme="dark"]{--paper:#121c28;--surface:#1c2a3b;--surface-soft:#27394f;--ink:#edf5ff;--muted:#adc1d9;--line:#3f5875;--accent:#aad9ff;--green:var(--accent);--node:#285b8c;--node-text:#f2faff;--panel:#202f41;--panel-ink:#adc1d9;--node-line:#3f5875;}
+html[data-theme] .hero-intro,html[data-theme] .hero-footnote p,html[data-theme] .project-heading>p:not(.project-meta),html[data-theme] .project-preview-list,html[data-theme] .project-meta{color:var(--muted)}
+html[data-theme] .hero h1 em{color:var(--accent)}
+html[data-theme] .button-dark{background:var(--accent);color:var(--paper)}
+html[data-theme] .button-dark:hover{background:var(--node);color:var(--node-text)}
+html[data-theme] .theme-toggle:hover{background:var(--surface-soft);border-color:var(--muted)}
+html[data-theme] .system-art{background-color:var(--panel);border-color:var(--line);background-image:radial-gradient(#9a8c7840 .7px,transparent .7px)}
+html[data-theme] .art-topline,html[data-theme] .art-bottomline,html[data-theme] .diagram-input small,html[data-theme] .integration-row small,html[data-theme] .small-cross{color:var(--panel-ink)}
+html[data-theme] .diagram-input,html[data-theme] .integration-row>div,html[data-theme] .transcript-line{background:var(--surface);border-color:var(--line);color:var(--ink)}
+html[data-theme] .runtime-node,html[data-theme] .copilot-core{background:var(--node);border-color:var(--node-line);color:var(--node-text);box-shadow:none}
+html[data-theme] .runtime-node>small,html[data-theme] .runtime-caption,html[data-theme] .copilot-core small,html[data-theme] .runtime-symbol,html[data-theme] .runtime-tags span{color:var(--node-text)}
+html[data-theme] .runtime-tags span{border-color:var(--node-line)}
+html[data-theme] .diagram-output{background:var(--surface-soft);border-color:var(--line);color:var(--ink)}
+html[data-theme] .integration-row>div>span,html[data-theme] .diagram-icon{color:var(--accent)}
+html[data-theme] .orbital{border-color:var(--line)}
+html[data-theme] .waveform i{background:var(--accent)}
+html[data-theme] .copilot-art{background:var(--panel);color:var(--panel-ink)}
+html[data-theme] .project-copy p.project-preview{color:var(--ink)}
+html[data-theme] .project .project-demo{--demo-surface:var(--surface);--demo-panel:var(--panel);--demo-ink:var(--ink);--demo-muted:var(--muted);--demo-line:var(--line);--demo-accent:var(--accent);--demo-soft:var(--surface-soft);--demo-paper:var(--paper)}
+html[data-theme] .project-heading .tags li{color:var(--muted);border-color:var(--line);background:transparent}
+html[data-theme] .tag-info:hover,html[data-theme] .tag-info[aria-expanded="true"]{background:var(--surface-soft);color:var(--ink)}
+html[data-theme] .tag-tooltip{background:var(--surface);color:var(--ink);border-color:var(--muted)}
+html[data-theme] .site-header.is-floating{background:var(--paper);border-color:var(--line);box-shadow:0 8px 30px #00000018}
+html[data-theme] ::selection{background:var(--accent);color:var(--paper)}
+html[data-theme] .project-more,html[data-theme] .project-more[open] summary,html[data-theme] .project details.project-more{border-color:var(--line)}
+html[data-theme] .project-more summary{color:var(--accent)}
+
+/* Neutral context, sapphire emphasis. */
+html[data-theme] .project .project-copy p.project-preview{color:var(--ink)}
+html[data-theme] .site-header.is-floating{background:var(--paper)}
+html[data-theme] .demo-policy,html[data-theme] .demo-next-action{border-color:var(--line)}
+html[data-theme] .project .demo-stage{border-color:var(--line)}
+html[data-theme] nav a:hover{color:var(--accent)}
+html[data-theme] .hero-intro,html[data-theme] .about-copy .large-copy{color:var(--muted)}
+html[data-theme] .project-meta,html[data-theme] .project-preview-label,html[data-theme] .service-top,html[data-theme] .tech-marquee-label{color:var(--muted)}
+html[data-theme] .text-link{border-color:var(--line)}
+html[data-theme] .copilot-art,html[data-theme] .notes-art,html[data-theme] .bi-art{background:var(--panel);color:var(--panel-ink)}
+html[data-theme] .bi-query,html[data-theme] .bi-branches>div{background:var(--surface);border-color:var(--line);color:var(--ink)}
+html[data-theme] .bi-orchestrator{background:var(--node);color:var(--node-text)}
+html[data-theme] .bi-orchestrator span{color:var(--node-text)}
+html[data-theme] .bi-branches span,html[data-theme] .bi-data,html[data-theme] .bi-trace{color:var(--muted)}
+html[data-theme] .notes-paper{background:#fafcff;border-color:#b8c8da;color:#263b53;box-shadow:7px 9px 18px #17263a1a}
+html[data-theme] .notes-paper>strong{color:#263b53}
+html[data-theme] .notes-paper .paper-line,html[data-theme] .notes-divider i{background:#cfdae7}
+html[data-theme] .notes-divider>span,html[data-theme] .stream-line b{color:#4c719b}
+html[data-theme] .stream-line span{background:#93adc9}
+html[data-theme] .tech-logo{background:#fafcff;border-color:#b8c8da;color:#1c2d43}
+html[data-theme] .approach-section{background:var(--surface);border-color:var(--line)}
+html[data-theme] .service{background:transparent;border-color:var(--line)}
+html[data-theme] .service li::before,html[data-theme] .project-preview-list li::before,html[data-theme] .working-principles>div>span{color:var(--accent)}
+html[data-theme] .working-principles p:not(.eyebrow),html[data-theme] .working-principles strong{color:var(--ink)}
+html[data-theme] .tags li{color:var(--muted);border-color:var(--line)}
+html[data-theme] .contact-section{background:var(--node);color:var(--node-text)}
+html[data-theme] .contact-section h2,html[data-theme] .contact-section h2 em{color:var(--node-text)}
+html[data-theme] .contact-top>.eyebrow,html[data-theme] .contact-top>span,html[data-theme] .contact-bottom p,html[data-theme] .contact-bottom p.availability,html[data-theme] .copy-email{color:#d5e9fc}
+html[data-theme] .email-link{border-color:#86a9cd}
+html[data-theme] .contact-section .status-dot{background:#c0e4ff}
+html[data-theme] .site-footer p,html[data-theme] .site-footer>a:last-child{color:var(--muted)}
+html[data-theme] .site-header.is-floating{background:color-mix(in srgb,var(--paper) 94%,transparent);border-color:var(--line)}
+html[data-theme] .demo-controls,html[data-theme] .demo-play-button{color:var(--ink)}
+html[data-theme] .demo-disclaimer{color:var(--muted)}

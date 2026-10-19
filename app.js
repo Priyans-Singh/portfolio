@@ -7,7 +7,7 @@ function syncThemeButton() {
   themeButton.setAttribute('aria-label', `Switch to ${dark ? 'light' : 'dark'} theme`);
   themeButton.querySelector('.theme-icon').textContent = dark ? '☀' : '☾';
   themeButton.querySelector('.theme-text').textContent = dark ? 'Light' : 'Dark';
-  themeColor.content = dark ? '#0b101b' : '#f4f6fa';
+  themeColor.content = dark ? '#121c28' : '#edf1f5';
 }
 syncThemeButton();
 themeButton.addEventListener('click', () => {
