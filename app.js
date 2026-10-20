@@ -111,8 +111,43 @@ document.querySelectorAll('.tag-info').forEach(button => {
 tagTooltip.addEventListener('pointerenter', () => clearTimeout(dismissTagTimer));
 tagTooltip.addEventListener('pointerleave', deferTagDismissal);
 addEventListener('keydown', event => { if (event.key === 'Escape') closeTagExplanation(); });
-addEventListener('scroll', closeTagExplanation, { passive: true });
+addEventListener('scroll', () => {
+  if (activeTag && document.activeElement === activeTag) showTagExplanation(activeTag);
+  else closeTagExplanation();
+}, { passive: true });
 addEventListener('resize', closeTagExplanation);
 document.addEventListener('pointerdown', event => {
   if (!event.target.closest('.tag-info,.tag-tooltip')) closeTagExplanation();
 });
+
+// Device preference takes priority; visitors can also stop automatic motion here.
+const motionButton = document.querySelector('.motion-toggle');
+const deviceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+let userPaused = false;
+try { userPaused = localStorage.getItem('portfolio-motion') === 'paused'; } catch {}
+function syncMotion() {
+  const paused = deviceMotion.matches || userPaused;
+  document.documentElement.dataset.motion = paused ? 'paused' : 'auto';
+  motionButton.setAttribute('aria-pressed', String(paused));
+  motionButton.disabled = deviceMotion.matches;
+  motionButton.textContent = deviceMotion.matches ? 'Reduced motion' : paused ? 'Motion paused' : 'Pause motion';
+  motionButton.title = deviceMotion.matches ? 'Reduced motion is enabled in your device settings.' : 'Stop tool scrolling and automatic walkthrough previews';
+  document.querySelectorAll('.tech-marquee-viewport').forEach((row, index) => {
+    row.tabIndex = paused ? 0 : -1;
+    if (paused) {
+      row.setAttribute('role', 'region');
+      row.setAttribute('aria-label', `Tools row ${index + 1}. Scroll horizontally to explore.`);
+    } else {
+      row.removeAttribute('role');
+      row.removeAttribute('aria-label');
+    }
+  });
+  document.dispatchEvent(new Event('portfolio:motionchange'));
+}
+motionButton.addEventListener('click', () => {
+  userPaused = !userPaused;
+  try { localStorage.setItem('portfolio-motion', userPaused ? 'paused' : 'auto'); } catch {}
+  syncMotion();
+});
+deviceMotion.addEventListener('change', syncMotion);
+syncMotion();

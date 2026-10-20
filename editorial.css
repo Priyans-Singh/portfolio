@@ -106,3 +106,30 @@ a:focus-visible,button:focus-visible,summary:focus-visible,.project:focus-visibl
 .system-art .integration-icon svg{display:block;width:23px;height:23px;flex:none}
 /* Full wordmarks keep their natural proportions instead of using square icon sizing. */
 .tech-logo.tech-logo-wordmark img{width:auto;height:27px;max-width:150px;object-fit:contain}
+
+/* Audit polish: shared controls, readable annotations, accessible motion. */
+.skip-link{z-index:200;color:var(--paper);background:var(--ink)}
+.visual-caption{opacity:1;color:var(--muted)}
+.theme-toggle{width:44px;min-width:44px;height:44px;min-height:44px}
+.tag-info,.copy-email{min-height:44px}
+.site-footer a{min-height:44px;display:inline-flex;align-items:center}
+.tech-marquee-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:8px}
+.tech-marquee-heading .tech-marquee-label{margin:0}
+.motion-toggle{font:500 12px/1.4 var(--sans);color:var(--muted);background:transparent;border:1px solid var(--line);border-radius:6px;padding:10px 13px;min-height:44px;flex:none;cursor:pointer}
+.motion-toggle:hover,.motion-toggle[aria-pressed="true"]{color:var(--ink);background:var(--surface)}
+.motion-toggle:disabled{cursor:default}
+html[data-motion="paused"]{scroll-behavior:auto}
+html[data-motion="paused"] *,html[data-motion="paused"] *::before,html[data-motion="paused"] *::after{animation:none!important;transition:none!important}
+html[data-motion="paused"] .tech-marquee-viewport{overflow-x:auto;mask-image:none;scrollbar-width:thin}
+html[data-motion="paused"] .tech-marquee-group[aria-hidden="true"]{display:none}
+html[data-motion="paused"] .tech-logo:hover{transform:none}
+.tech-marquee-viewport:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.bi-region-controls button{font-size:11px;min-height:28px;min-width:38px;padding:4px}
+@media(max-width:600px){
+  .brand small,.hero-availability,.art-topline,.art-bottomline,.contact-top .eyebrow{font-size:11px}
+  .hero-availability{letter-spacing:.035em}
+  .tech-marquee-heading{align-items:flex-start;gap:12px}
+  .tech-marquee-heading .tech-marquee-label{line-height:1.6;max-width:20ch;padding-block:5px}
+  .motion-toggle{padding-inline:10px}
+  .bi-region-controls button{min-height:32px;font-size:11px}
+}

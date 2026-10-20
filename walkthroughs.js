@@ -1,7 +1,7 @@
 'use strict';
 
 (() => {
-  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const motionReduced = () => document.documentElement.dataset.motion === 'paused';
   const desktopMode = matchMedia('(min-width: 761px)');
   const duration = 13000;
   const phaseStarts = { before: 0, bridge: 4500, after: 7000 };
@@ -39,6 +39,7 @@
       this.label = root.querySelector('.demo-control-label');
       this.status = root.querySelector('.demo-status');
       this.badge = root.querySelector('.demo-phase-badge');
+      this.playback = root.querySelector('.demo-playback');
       this.text = copy[root.dataset.demo];
       this.elapsed = 0;
       this.state = 'idle';
@@ -81,6 +82,14 @@
         this.summaryCompleteAt = phaseStarts.after + startsAt - 160;
       }
       this.answerCards = [...root.querySelectorAll('[data-appear]')];
+      this.newestAnswer = root.querySelector('.demo-policy[data-appear]');
+      this.olderAnswer = root.querySelector('.demo-next-action[data-appear]');
+      this.summaryLabels = root.dataset.demo === 'notes' ? [
+        [root.querySelector('.demo-summary-state'), 'Summary ready', 'Generating summary…'],
+        [root.querySelector('.demo-stream-label'), 'Complete', 'Generating'],
+        [root.querySelector('.demo-notes-after .demo-window-badge'), 'Summary ready', 'Generating summary'],
+        [root.querySelector('.demo-button-done'), '✓ Summarized', 'Summarizing…']
+      ] : [];
       this.tick = this.tick.bind(this);
       this.card.tabIndex = 0;
       this.card.setAttribute('aria-label', `${this.text.title} project. Hover or focus to preview the walkthrough.`);
@@ -88,16 +97,16 @@
         this.resumeWhenVisible = false;
         if (this.state !== 'idle') {
           this.reset();
-          if (!desktopMode.matches) this.root.querySelector('.demo-stage').scrollIntoView({ behavior: reducedMotion.matches ? 'auto' : 'smooth', block: 'center' });
+          if (!desktopMode.matches) this.root.querySelector('.demo-stage').scrollIntoView({ behavior: motionReduced() ? 'auto' : 'smooth', block: 'center' });
         }
         else this.play();
       });
       this.root.querySelector('.demo-stage').addEventListener('click', event => {
-        if ((!desktopMode.matches || reducedMotion.matches) && this.state === 'idle' && !event.target.closest('button')) this.play();
+        if ((!desktopMode.matches || motionReduced()) && this.state === 'idle' && !event.target.closest('button')) this.play();
       });
       this.card.addEventListener('pointerenter', () => {
         this.hovered = true;
-        if (!desktopMode.matches || reducedMotion.matches) return;
+        if (!desktopMode.matches || motionReduced()) return;
         clearTimeout(this.hoverTimer);
         this.hoverTimer = setTimeout(() => {
           if (this.hovered && this.inView && !document.hidden && this.state === 'idle') this.play();
@@ -109,7 +118,7 @@
         if (desktopMode.matches && !this.hasKeyboardFocus()) this.reset();
       });
       this.card.addEventListener('focusin', event => {
-        if (desktopMode.matches && !reducedMotion.matches && event.target.matches(':focus-visible') && this.inView && this.state === 'idle') this.play();
+        if (desktopMode.matches && !motionReduced() && event.target.matches(':focus-visible') && this.inView && this.state === 'idle') this.play();
       });
       this.card.addEventListener('focusout', event => {
         if (desktopMode.matches && !this.hovered && !this.card.contains(event.relatedTarget)) this.reset();
@@ -144,16 +153,16 @@
           }
         });
       }
-      reducedMotion.addEventListener('change', () => {
+      document.addEventListener('portfolio:motionchange', () => {
         this.reset();
         this.syncControls();
-        if (!reducedMotion.matches && desktopMode.matches && this.inView && this.wantsDesktopPreview()) this.play();
+        if (!motionReduced() && desktopMode.matches && this.inView && this.wantsDesktopPreview()) this.play();
       });
       desktopMode.addEventListener('change', () => {
         this.reset();
         this.hovered = this.card.matches(':hover');
         this.syncControls();
-        if (desktopMode.matches && !reducedMotion.matches && this.inView && this.wantsDesktopPreview()) this.play();
+        if (desktopMode.matches && !motionReduced() && this.inView && this.wantsDesktopPreview()) this.play();
       });
       this.render();
       this.syncControls();
@@ -212,7 +221,7 @@
       this.lastTime = now;
       this.render();
       if (this.elapsed >= duration) {
-        if (reducedMotion.matches) {
+        if (motionReduced()) {
           this.state = 'ended';
           this.root.classList.remove('is-playing');
           this.root.classList.add('is-ended');
@@ -233,32 +242,37 @@
         this.root.dataset.phase = nextPhase;
         this.syncControls();
       }
-      this.badge.textContent = this.text[this.phase];
+      if (this.badge.textContent !== this.text[this.phase]) this.badge.textContent = this.text[this.phase];
       this.typed.forEach(({ node, fullText, phase, start, speed, bubble }) => {
         const localTime = this.elapsed - phaseStarts[phase] - start;
-        if (bubble) bubble.hidden = phase !== this.phase || localTime < 0;
-        const count = reducedMotion.matches ? fullText.length : Math.max(0, Math.min(fullText.length, Math.floor(localTime * speed / 1000)));
+        if (bubble) {
+          const hidden = phase !== this.phase || localTime < 0;
+          if (bubble.hidden !== hidden) bubble.hidden = hidden;
+        }
+        const count = motionReduced() ? fullText.length : Math.max(0, Math.min(fullText.length, Math.floor(localTime * speed / 1000)));
         const nextText = fullText.slice(0, count);
         if (node.textContent !== nextText) node.textContent = nextText;
       });
       this.answerCards.forEach(card => {
         const visible = this.phase === 'after' && this.elapsed - phaseStarts.after >= Number(card.dataset.appear);
-        card.hidden = !visible;
+        if (card.hidden === visible) card.hidden = !visible;
       });
-      const newest = this.root.querySelector('.demo-policy[data-appear]');
-      const older = this.root.querySelector('.demo-next-action[data-appear]');
-      if (older && newest) older.classList.toggle('is-shifted', !newest.hidden && !older.hidden);
-      if (this.root.dataset.demo === 'notes') {
+      if (this.olderAnswer && this.newestAnswer) {
+        this.olderAnswer.classList.toggle('is-shifted', !this.newestAnswer.hidden && !this.olderAnswer.hidden);
+      }
+      if (this.summaryLabels.length) {
         const complete = this.elapsed >= this.summaryCompleteAt;
-        this.root.querySelector('.demo-summary-state').textContent = complete ? 'Summary ready' : 'Generating summary…';
-        this.root.querySelector('.demo-stream-label').textContent = complete ? 'Complete' : 'Generating';
-        this.root.querySelector('.demo-notes-after .demo-window-badge').textContent = complete ? 'Summary ready' : 'Generating summary';
-        this.root.querySelector('.demo-button-done').textContent = complete ? '✓ Summarized' : 'Summarizing…';
+        this.summaryLabels.forEach(([node, ready, generating]) => {
+          const next = complete ? ready : generating;
+          if (node.textContent !== next) node.textContent = next;
+        });
       }
     }
 
     syncControls() {
-      const desktopPreview = desktopMode.matches && !reducedMotion.matches;
+      const desktopPreview = desktopMode.matches && !motionReduced();
+      // Expose the interactive BI chart only while its scene is actually visible.
+      this.playback.setAttribute('aria-hidden', String(!(this.root.dataset.demo === 'bi' && this.phase === 'after' && this.state !== 'idle')));
       this.root.classList.toggle('is-desktop-loop', desktopPreview);
       this.card.tabIndex = desktopPreview ? 0 : -1;
       this.card.setAttribute('aria-label', `${this.text.title} project. ${desktopPreview ? 'Hover or focus to preview the walkthrough.' : 'Tap the thumbnail or select Play walkthrough to preview.'}`);
@@ -269,7 +283,7 @@
       this.icon.innerHTML = icons[icon];
       this.button.setAttribute('aria-label', this.state === 'idle' ? `Play ${this.text.title} walkthrough` : `Show ${this.text.title} thumbnail`);
       if (this.state === 'idle') {
-        this.status.textContent = reducedMotion.matches ? '13 seconds · Select play' : 'Tap thumbnail to preview';
+        this.status.textContent = motionReduced() ? '13 seconds · Select play' : 'Tap thumbnail to preview';
       } else if (this.state === 'ended') {
         this.status.textContent = 'Complete · Return to thumbnail';
       } else {
@@ -285,7 +299,7 @@
           this.pause();
           this.resumeWhenVisible = true;
         }
-      } else if (!document.hidden && (this.resumeWhenVisible || (desktopMode.matches && !reducedMotion.matches && this.wantsDesktopPreview() && this.state === 'idle'))) {
+      } else if (!document.hidden && (this.resumeWhenVisible || (desktopMode.matches && !motionReduced() && this.wantsDesktopPreview() && this.state === 'idle'))) {
         this.play();
       }
     }
