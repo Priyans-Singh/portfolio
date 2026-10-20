@@ -52,3 +52,6 @@ All nine verified findings addressed in v21. No P0 findings. No open P1 findings
 - Cached animation references and unchanged-text guards replace per-frame label rewrites. Font discovery begins directly from HTML. No performance score or frame-rate claim without benchmarking.
 
 Post-fix scoped scores: Accessibility 3/4, Performance 3/4, Theming 4/4, Responsive 3/4, Integrity 4/4 (17/20). Remaining uncertainty is cross-browser, assistive-technology and physical-device validation, not a known visual defect. Full audit report is intentionally kept outside the deployed static directory.
+
+## Follow-up — restored hover interaction
+The global motion toggle was removed at the owner’s request. Its saved pause preference is discarded, so it cannot disable project hover playback. Tool rows remain pausable by hover and keyboard focus, with OS reduced-motion support. Desktop previews show contextual Pause/Resume and Show thumbnail controls only during active hover/focus; mobile controls remain unchanged. This supersedes the global-toggle recommendation above.

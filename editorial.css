@@ -115,9 +115,6 @@ a:focus-visible,button:focus-visible,summary:focus-visible,.project:focus-visibl
 .site-footer a{min-height:44px;display:inline-flex;align-items:center}
 .tech-marquee-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:8px}
 .tech-marquee-heading .tech-marquee-label{margin:0}
-.motion-toggle{font:500 12px/1.4 var(--sans);color:var(--muted);background:transparent;border:1px solid var(--line);border-radius:6px;padding:10px 13px;min-height:44px;flex:none;cursor:pointer}
-.motion-toggle:hover,.motion-toggle[aria-pressed="true"]{color:var(--ink);background:var(--surface)}
-.motion-toggle:disabled{cursor:default}
 html[data-motion="paused"]{scroll-behavior:auto}
 html[data-motion="paused"] *,html[data-motion="paused"] *::before,html[data-motion="paused"] *::after{animation:none!important;transition:none!important}
 html[data-motion="paused"] .tech-marquee-viewport{overflow-x:auto;mask-image:none;scrollbar-width:thin}
@@ -130,6 +127,15 @@ html[data-motion="paused"] .tech-logo:hover{transform:none}
   .hero-availability{letter-spacing:.035em}
   .tech-marquee-heading{align-items:flex-start;gap:12px}
   .tech-marquee-heading .tech-marquee-label{line-height:1.6;max-width:20ch;padding-block:5px}
-  .motion-toggle{padding-inline:10px}
   .bi-region-controls button{min-height:32px;font-size:11px}
 }
+
+/* Desktop controls belong to the active preview; the idle thumbnail stays clean. */
+.demo-pause-button{display:none}
+.project-demo{position:relative}
+.is-desktop-loop .demo-controls{display:flex;position:absolute;right:12px;bottom:40px;z-index:5;margin:0;gap:6px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .15s ease}
+.is-desktop-loop.has-started:hover .demo-controls,.is-desktop-loop.has-started:focus-within .demo-controls{opacity:1;visibility:visible;pointer-events:auto}
+.is-desktop-loop .demo-status{display:none}
+.is-desktop-loop .demo-pause-button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 12px;border:1px solid var(--demo-line);border-radius:4px;background:var(--demo-surface);color:var(--demo-ink);font:600 13px var(--sans);cursor:pointer}
+.is-desktop-loop .demo-play-button{min-height:44px}
+.is-desktop-loop .demo-pause-button:hover{background:var(--demo-soft);border-color:var(--demo-accent)}

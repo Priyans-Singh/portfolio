@@ -35,6 +35,7 @@
       this.root = root;
       this.card = root.closest('.project');
       this.button = root.querySelector('.demo-play-button');
+      this.pauseButton = root.querySelector('.demo-pause-button');
       this.icon = root.querySelector('.demo-control-icon');
       this.label = root.querySelector('.demo-control-label');
       this.status = root.querySelector('.demo-status');
@@ -93,6 +94,10 @@
       this.tick = this.tick.bind(this);
       this.card.tabIndex = 0;
       this.card.setAttribute('aria-label', `${this.text.title} project. Hover or focus to preview the walkthrough.`);
+      this.pauseButton.addEventListener('click', () => {
+        if (this.state === 'playing') this.pause();
+        else this.play();
+      });
       this.button.addEventListener('click', () => {
         this.resumeWhenVisible = false;
         if (this.state !== 'idle') {
@@ -276,7 +281,9 @@
       this.root.classList.toggle('is-desktop-loop', desktopPreview);
       this.card.tabIndex = desktopPreview ? 0 : -1;
       this.card.setAttribute('aria-label', `${this.text.title} project. ${desktopPreview ? 'Hover or focus to preview the walkthrough.' : 'Tap the thumbnail or select Play walkthrough to preview.'}`);
-      this.root.querySelector('.demo-hover-hint').textContent = this.state === 'idle' ? 'Hover to preview' : 'Looping preview';
+      this.root.querySelector('.demo-hover-hint').textContent = this.state === 'idle' ? 'Hover to preview' : this.state === 'paused' ? 'Preview paused' : 'Looping preview';
+      this.pauseButton.textContent = this.state === 'paused' ? 'Resume' : 'Pause';
+      this.pauseButton.setAttribute('aria-label', `${this.state === 'paused' ? 'Resume' : 'Pause'} ${this.text.title} walkthrough`);
       const label = this.state === 'idle' ? 'Play walkthrough' : 'Show thumbnail';
       const icon = this.state === 'idle' ? 'play' : 'thumbnail';
       this.label.textContent = label;
